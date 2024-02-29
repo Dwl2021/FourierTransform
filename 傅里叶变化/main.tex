@@ -1,0 +1,528 @@
+\documentclass[UTF8]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage[UTF8]{ctex}
+\usepackage{listings} % 插入代码用到
+\usepackage{listings}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage{enumitem}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\theoremstyle{definition}
+\usepackage{caption}
+\usepackage{empheq}
+\usepackage{booktabs}
+\usepackage{placeins}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{framed}
+\usepackage{mathrsfs}
+\lstset{
+language=SQL,
+basicstyle=\ttfamily,
+keywordstyle=\color{blue}\bfseries,
+commentstyle=\color{green!40!black},
+stringstyle=\color{red},
+showstringspaces=false,
+morekeywords={SELECT, FROM, WHERE, GROUP, BY, ORDER, JOIN, ON, CHECK, CREATE,function,procedure,trigger}
+}
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        {
+        \fontsize{30}{25}
+        \selectfont 
+        \textbf{傅里叶变换}
+
+        \vspace*{2cm}
+        
+        \fontsize{30}{25}
+        \selectfont 
+        % \textbf{应用综合大作业}
+        
+        }
+
+        \vspace{9cm}
+        
+        {
+        \fontsize{20}{20}
+        \textbf{邓伟亮}
+        \vspace*{1cm}
+        
+        \textbf{21312747}
+  
+        }
+        
+       
+        
+        \vfill
+
+        {\fontsize{15}{20}\selectfont
+        智能科学与技术3班
+        
+        \vspace*{1cm}
+        Oct. 2023
+        }
+        
+        
+    \end{center}
+\end{titlepage}
+
+
+\section{傅里叶级数}
+\subsection{三角形傅里叶级数}
+周期函数 $f(t)$ 在区间 $(-\frac{T}{2},\frac{T}{2})$ 内可表示为:
+
+\begin{equation*}
+f(t) = \frac{a_0}{2}+\sum_{n=1}^{\infty}\left[a_n \cos (n \omega t)+b_n \sin (n \omega t)\right] = \frac{A_0}{2}+\sum_{n=1}^{\infty} A_n \cos \left(n \omega t+\phi_n\right)
+\end{equation*}
+
+其中，
+
+\begin{equation*}
+\begin{aligned}
+&a_n  =\frac{2}{T} \int_{t_0}^{t_0+T} f(t) \cos (n \omega t) d t ,\quad
+b_n  =\frac{2}{T} \int_{t_0}^{t_0+T} f(t) \sin (n \omega t) d t \\ 
+&A_0=a_0 ,\; A_n=\sqrt{a_n^2+b_n^2},  \; \phi_n=-\arctan \left(\frac{b_n}{a_n}\right)\\
+\end{aligned}
+\end{equation*}
+
+
+
+\begin{framed}
+\textbf{可行性证明：}
+设有 $n$ 个函数 $\phi_n(t)$ 在区间 $\left(t_1, t_2\right)$ 构成一个正交函数集，即$\int_{t_1}^{t_2}\phi_i \phi_j =0 (i\ne j)$。将任一函数 $f(t)$ 用这 $n$ 个正交函数的线性组合来近似:
+
+\begin{equation*}
+f(t) \approx C_1 \phi_1(t)+C_2 \phi_2(t)+\cdots+C_n \phi_n(t)=\sum_{j=1}^n C_j \phi_j(t)
+\end{equation*}
+
+则均方误差为，
+
+\begin{equation*}
+\overline{\varepsilon^2}=\frac{1}{t_2-t_1} \int_{t_1}^{t_2}\left[f(t)-\sum_{j=1}^n C_j \phi_j(t)\right]^2 d t
+\end{equation*}
+
+求导计算最小值点，
+
+\begin{equation*}
+\frac{\partial \overline{\varepsilon^2}}{\partial C_i}=\frac{\partial}{\partial C_i}\left\{\frac{1}{t_2-t_1} \int_{t_1}^{t_2}\left[f(t)-\sum_{j=1}^n C_j \phi_j(t)\right]^2 d t\right\}=0
+\end{equation*}
+
+解得系数为，
+
+\begin{equation*}
+C_i=\frac{\int_{t_1}^{t_2} f(t) \phi_i(t) d t}{\int_{t_1}^{t_2} \phi_i{ }^2(t) d t}=\frac{1}{K_i} \int_{t_1}^{t_2} f(t) \phi_i(t) d t ,\quad \text{其中}K_i=\int_{t_1}^{t_2} \phi_i^2(t) d t
+\end{equation*}
+
+而在该情形下，
+
+\begin{equation*}
+a_n = \frac{\int_{-T / 2}^{T / 2} f(t) \cos(n \omega t) d t}{\int_{-T / 2}^{T / 2} \cos^2(n \omega t) d t} = \frac{2}{T} \int_{-T / 2}^{T / 2} f(t) \cos(n \omega t) d t 
+\end{equation*}
+\begin{equation*}
+b_n = \frac{\int_{-T / 2}^{T / 2} f(t) \sin(n \omega t) d t}{\int_{-T / 2}^{T / 2} \sin^2(n \omega t) d t} = \frac{2}{T} \int_{-T / 2}^{T / 2} f(t) \sin(n \omega t) d t 
+\end{equation*}
+\begin{equation*}
+\frac{a_0}{2} = C_0 = \frac{\int_{-T / 2}^{T / 2} f(t) d t}{\int_{-T / 2}^{T / 2} 1^2 d t} = \frac{1}{T} \int_{-T / 2}^{T / 2} f(t) d t = \overline{f(t)}
+\end{equation*}
+\end{framed}
+
+
+
+\subsection{指数型傅里叶级数}
+根据欧拉公式，可将三角形傅里叶级数转化为，
+
+\begin{equation*}
+\begin{aligned}
+f(t) 
+&=\frac{A_0}{2}+\sum_{n=1} \frac{A_n}{2}\left\{e^{j\left(n \omega t+\phi_n\right)}+e^{-j\left(n \omega t+\phi_n\right)}\right\}\\
+&=\frac{A_0}{2}+\frac{1}{2} \sum_{n=1}^{\infty}\left\{A_n e^{j \phi_n} e^{j n \omega t}+A_n e^{-j \phi_n} e^{-j n \omega t)}\right\}\\
+&=\sum_{n=-\infty}^{\infty} F_n e^{j n \omega t}
+\end{aligned}
+\end{equation*}
+
+其中，
+
+% \begin{equation*}
+% \begin{aligned}
+% &F_0=\frac{A_0}{2} = \frac{1}{T} \int_T f(t) d t ,\\
+% &F_{ \pm n}=\frac{A_n}{2} e^{ \pm j \phi_n} = \frac{1}{T} \int_T f(t) e^{-j n \omega} d t,\; \text{其中}\omega = \frac{2\pi}{T}
+% \end{aligned}
+% \end{equation*}
+
+\begin{equation*}
+F_n=F\left(n \omega_0\right)=\frac{1}{T_0} \int_{-T_0 / 2}^{T_0 / 2} f(t) e^{-j  n \omega_0 t} d t,\; \text{其中}\omega_0 = \frac{2\pi}{T}
+\end{equation*}
+
+$F_n$也称为信号的频谱.
+
+\subsection{周期信号频谱的性质}
+\subsubsection{性质1}
+对于实信号$s(t)$，有$s(t) = s^*(t)$
+
+\begin{equation*}
+F_{-n}=\frac{1}{T_0} \int_{-T_0 / 2}^{T_0 / 2} s(t) e^{+j 2 \pi n f_0 t} d t=\left[\frac{1}{T_0} \int_{-T_0 / 2}^{T_0 / 2} s(t) e^{-j 2 \pi n f_0 t} d t\right]^*=F_n^*
+\end{equation*}
+
+
+正频率部分和负频率部分间存在复数共轭关系.
+
+
+\subsubsection{性质2}
+对于实偶信号$s(t)$，
+\begin{equation*}
+ \quad F_{-n}=\frac{1}{T_0} \int_{-T_0 / 2}^{T_0 / 2} s(t) e^{j 2 \pi n f_0 t} d t=\frac{1}{T_0} \int_{-T_0 / 2}^{T_0 / 2} s(-t) e^{-j 2 \pi n f_0 t} d t=F_n
+\end{equation*}
+
+再根据性质1可得，
+
+\begin{equation*}
+F_n = F_n^*
+\end{equation*}
+
+若$s(t)$是实偶信号，则 $F_n$ 为实函数.
+
+\subsection{部分常见周期信号的傅里叶级数}
+\subsubsection{余弦信号$cos(\omega_0t+\theta)$}
+\noindent\textbf{方法一：}
+\begin{equation*}
+\begin{aligned}
+F_n &= \frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}cos(\omega_0t+\theta)e^{-jn\omega_0t}dt \\
+& =  \frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}(  \frac{e^{j(\omega_0t+\theta)}+e^{-j(\omega_0t+\theta)}}{2}  )e^{-jn\omega_0t}dt\\
+& = \frac{1}{2T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}e^{j\theta}\cdot e^{j[(1-n)\omega_0t]}dt + \frac{1}{2T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}e^{-j\theta}\cdot e^{-j[(n+1)\omega_0t]}dt\\
+&= \frac{1}{2T_0}\bigg[  \frac{e^{j\theta}}{j(1-n)\omega_0} e^{j(1-n)\omega_0t}\bigg|_{-\frac{T_0}{2}}^{\frac{T_0}{2}} - \frac{-e^{j\theta}}{j(n+1)\omega_0} e^{-j(1+n)\omega_0t}\bigg|_{-\frac{T_0}{2}}^{\frac{T_0}{2}} \bigg]\\
+& = \frac{1}{2T_0}\bigg[  \frac{2e^{j\theta}}{(1-n)\omega_0}sin[(1-n)\pi]+  \frac{2e^{-j\theta}}{(n+1)\omega_0} sin[(n+1)\pi]\bigg]\\
+& =  \frac{e^{j\theta}}{2(1-n)\pi}sin[(1-n)\pi]+  \frac{e^{-j\theta}}{2(n+1)\pi} sin[(n+1)\pi],\quad n = 0,\pm1,\pm 2,\ldots
+\end{aligned}
+\end{equation*}
+
+因此可得，
+
+\begin{equation*}
+F_n = \begin{cases}
+& e^{j\theta},\quad n = 1\\
+& e^{-j\theta},\quad n = -1\\
+& 0, \quad other\;cases
+\end{cases}
+\end{equation*}
+
+\noindent\textbf{方法二：}
+
+通过傅里叶变换导出傅里叶级数。查傅里叶变换表可得，
+\begin{equation*}
+cos(\omega_0t+\theta)  =\frac{e^{j(\omega_0t+\theta)}+e^{-j(\omega_0t+\theta)}}{2} \leftrightarrow \pi e^{j\theta}\delta(\omega-\omega_0)+\pi e^{-j\theta}\delta(\omega+\omega_0) = 2\pi\sum_{n=-\infty}^{\infty}F_n\delta(\omega-n\omega_0)
+\end{equation*}
+
+因此可以得到，当$n=1$时，$F_n=e^{-j\theta}$；当$n=-1$时，$F_n=e^{j\theta}$；否则$F_n=0$，得到的结论与方法一相同。
+
+\section{傅里叶变换}
+\subsection{从傅里叶级数推导傅里叶变换}
+周期信号的周期$T\to \infty$，频谱间隔$\omega=\frac{2\pi}{T} \to 0$，因此可以得到，
+
+\begin{equation*}
+F_n = \frac{1}{T} \int_T f(t)e^{-jn\omega t}dt \to 0
+\end{equation*}
+
+此时，定义非周期信号的傅里叶变换为$F_nT$，得
+
+\begin{equation*}
+\begin{aligned}
+&F_nT = \int_T f(t)e^{-jn\omega t}dt \\
+&f(t) = \sum_{n= -\infty}^{\infty} F_ne^{jn\omega t} =
+\sum_{n = -\infty}^{\infty}F_n T e^{jn\omega t} \cdot \frac{1}{T}
+\end{aligned}
+\end{equation*}
+
+当$T \to \infty$时，有$\omega \to 0 $，$F_n T$ 变成频谱的连续函数 $F(j \omega)$.因此导出傅里叶变换定义的表达式，
+
+\begin{equation*}
+\begin{aligned}
+&\textbf{傅里叶变换：}\quad
+F(\omega) \stackrel{\text { def }}{=} \lim _{T \rightarrow \infty} F_n T=\int_{-\infty}^\infty f(t) e^{-j \omega t} d t\\
+&\textbf{傅里叶逆变换：}\quad
+f(t)=\lim _{T \rightarrow \infty} \sum_{n=-\infty}^{\infty} F_n T e^{j n \omega t}\left(\frac{2 \pi}{T}\right) \frac{1}{2 \pi}=\frac{1}{2 \pi} \int_{-\infty}^{\infty} F(j \omega) e^{j \omega t} d \omega
+\end{aligned}
+\end{equation*}
+
+
+
+\subsection{傅里叶变换的性质}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 性质名称 & 时间函数 & 频谱函数 & 性质名称 & 时间函数 & 频谱函数 \\
+\hline 线性 & $a f_1(t)+b f_2(t)$ & $a F_1(\mathrm{j} \omega)+b F_2(\mathrm{j} \omega)$ & 时域微分 & $\frac{\mathrm{d^n} f(t)}{\mathrm{d} t^n}$ & $(\mathrm{j} \omega)^n F(\mathrm{j} \omega)$ \\
+\hline 对称 & $ F(\mathrm{j} t)$& $2 \pi f(-\omega)$& 频域微分 & $(-\mathrm{j} t)^n f(t)$ & $\frac{\mathrm{d}^n F(\mathrm{j} \omega)}{\mathrm{d} \omega^n}$ \\
+\hline 频移 & $f(t)e^{\pm j\omega_0t}$ & $F[j(\omega \mp \omega_0)]$ & 时域积分 & $\int_{-\infty}^t f(x) \mathrm{d} x$ & $\frac{F(\mathrm{j} \omega)}{\mathrm{j} \omega}+\pi F(0) \delta(\omega)$ \\
+\hline 尺度变换 & $f(a t), a \neq 0$ & $\frac{1}{|a|} F\left(\mathrm{j}\frac{\omega}{a}\right)$ & 频域积分 & $\pi f(0) \delta(t)+\frac{f(t)}{-j t}$ & $\int_{-\infty}^\omega F(x) d x$ \\
+\hline 时移 & $f\left(t \pm t_0\right)$ & $F(\mathrm{j} \omega) \mathrm{e}^{\pm \mathrm{j} \omega t_0}$ & 时域卷积 & $f_1(t) * f_2(t)$ & $ F_1(\mathrm{j} \omega)  F_2(\mathrm{j} \omega)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{线性性质}
+\begin{center}
+$f_1(t) \leftrightarrow F_1(j \omega), f_2(t) \leftrightarrow F_2(j \omega) \quad \Rightarrow \quad a f_1(t)+b f_2(t) \leftrightarrow a F_1(j \omega)+b F_2(j \omega)$
+\end{center}
+
+\subsubsection{对称性质}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow  \quad F(jt) \leftrightarrow 2 \pi f(-\omega)$
+\end{center}
+
+\subsubsection{时移特性}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad f\left(t \pm t_0\right) \leftrightarrow e^{ \pm j \omega t_0} F(j \omega)$
+\end{center}
+
+\subsubsection{尺度变换性质}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad f(a t) \leftrightarrow \frac{1}{|a|} F\left(j \frac{\omega}{a}\right), \;a \ne 0$
+\end{center}
+
+
+\subsubsection{频移特性}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad f(t) e^{ \pm j \omega_0 t} \leftrightarrow F\left[j\left(\omega \mp \omega_0\right)\right]$
+\end{center}
+
+
+
+\subsubsection{卷积定理}
+\begin{center}
+$  f_1(t) \leftrightarrow F_1(j \omega), f_2(t) \leftrightarrow F_2(j \omega) \quad \Rightarrow \quad  \begin{cases} & f_1(t) * f_2(t) \leftrightarrow F_1(j \omega) F_2(j \omega) \\ & f_1(t) f_2(t) \leftrightarrow \frac{1}{2 \pi} F_1(j \omega) * F_2(j \omega)\end{cases}$
+\end{center}
+
+
+
+\subsubsection{时域微分}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad \frac{d^n f(t)}{d t^n} \leftrightarrow(j \omega)^n F(j \omega)$
+\end{center}
+
+\subsubsection{时域积分}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad \int_{-\infty}^t f(\tau) d \tau \leftrightarrow \pi F(0) \delta(\omega)+\frac{F(j \omega)}{j \omega}$
+\end{center}
+
+\subsubsection{频域微分}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad (-j t)^n f(t) \leftrightarrow \frac{d^n F(j \omega)}{d \omega^n}$
+\end{center}
+
+\subsubsection{频域积分}
+\begin{center}
+$f(t) \leftrightarrow F(j \omega)  \quad \Rightarrow \quad \pi f(0) \delta(t)+\frac{f(t)}{-j t} \leftrightarrow \int_{-\infty}^\omega F(x) d x$
+\end{center}
+
+\subsection{常用傅里叶变换}
+\begin{center}
+\begin{table}[ht]
+  \centering
+    \caption{常用傅里叶变换表}
+  \begin{tabular}{ccc}
+    \toprule
+    信号 & 时间函数$f(t)$ & 频谱函数$F(\omega)$ \\
+    \midrule
+    单边指数脉冲 & $Ee^{-\alpha t}u(t)(\alpha>0)$ & $\frac{E}{\alpha+ j\omega}$ \\[10pt]
+    双边指数脉冲 & $Ee^{|\alpha| t}u(t)(\alpha>0)$ & $\frac{2\alpha E}{\alpha^2+ \omega^2}$ \\[10pt]
+    矩形脉冲 & $\begin{cases}E,&|t|<\tau /2\\ 0,&|t|\geq \tau /2\end{cases}$  & $E\tau Sa(\frac{\omega\tau}{2})$ \\[15pt]
+    冲激信号 & $E\delta(t)$ & $E$\\[10pt]
+    阶跃信号 & $Eu(t)$ & $\frac{E}{j\omega}+\pi E\delta(\omega)$\\[10pt]
+    直流信号 & $E$ & $2\pi E\delta(\omega)$\\[10pt]
+    余弦信号 & $Ecos(\omega_0 t)$ & $\pi E[\delta(\omega+\omega_0)+\delta(\omega-\omega_0)]$\\[10pt]
+    正弦信号 & $Esin(\omega_0 t)$ & $j\pi E[\delta(\omega+\omega_0)-\delta(\omega-\omega_0)]$\\[10pt]
+    斜变信号 & $tu(t)$ & $j\pi\delta'(\omega)-\frac{1}{\omega^2}$\\[10pt]
+    符号函数 &$Esgn(t)$ & $\frac{2E}{j\omega}$\\[10pt]
+    三角脉冲 & $\begin{cases}E(1-\frac{2|t|}{\tau}),&|t|<\tau /2\\ 0,&|t|\geq \tau /2\end{cases}$  & $\frac{E\tau}{2}Sa^2(\frac{\omega\tau}{4})$  \\[15pt]
+    抽样脉冲 & $Sa(\omega_c t)$  & $\begin{cases}\frac{\pi}{\omega_c},&|\omega|<\omega_c \\ 0, &\omega\geq \omega_c \\ \end{cases}$\\[15pt]
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{center}
+\FloatBarrier
+
+
+\section{周期信号的傅里叶变换}
+\subsection{傅里叶变换的导出形式1}
+\textbf{根据冲激序列的傅里叶变换导出周期信号的傅里叶变换。}首先确定周期信号和非周期信号的关系，从周期信号 $f_T(t)$ 中截取一个周期得到非周期信号 $f_0(t)$, 则 $f_T(t)$ 可看成 $f_0(t)$ 与周期为 $T$ 的冲激序列 $\delta_T(t)$ 的卷积:
+
+\begin{equation*}
+\begin{aligned}
+f_T(t) & =f_0(t) * \delta_T(t)=\int_{-\infty}^{\infty} f_0(\tau) \delta_T(t-\tau) d \tau \\
+& =\int_{-\infty}^{\infty} f_0(\tau) \sum_{m=-\infty}^{\infty} \delta(t-\tau-m T) d \tau \\
+& =\sum_{m=-\infty}^{\infty} \int_{-\infty}^{\infty} f_0(\tau) \delta [ \tau - (t-m T) ]d \tau
+=\sum_{m=-\infty}^{\infty} f_0(t-m T)
+\end{aligned}
+\end{equation*}
+
+
+将$f_T(t) =f_0(t) * \delta_T(t)$两边同时取傅里叶变换得，
+
+% \begin{equation*}
+% F_T(j \omega)=F_0(j \omega) \omega_0 \delta_{\Omega}(\omega)
+% \end{equation*}
+
+
+\begin{equation*}
+F_T(j \omega)=F_0(j \omega) \cdot \mathscr{F} [ \delta_T(t) ]
+\end{equation*}
+
+
+其中，$\delta_T(t)$是周期函数，可以展成傅里叶级数，
+
+
+\begin{equation*}
+\delta_T(t) = \sum_{n=-\infty}^{\infty} F_ne^{jn\omega_0t}%, \omega_0 = \frac{2\pi}{T}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+F_n & = \frac{1}{T} \int_T \delta_T(t) e^{-jn\omega t}dt \\
+& = \frac{1}{T} \int_T \delta(t) e^{-jn\omega t}dt \\
+& = \frac{1}{T}
+\end{aligned}
+\end{equation*}
+
+因此得到，
+
+\begin{equation*}
+\delta_T = \frac{1}{T}\sum_{n=-\infty}^{\infty} e^{jn\omega_0t} \leftrightarrow \frac{2\pi}{T} \sum_{n=-\infty}^{\infty}\delta(\omega - n\omega_0)  = \omega_0 \sum_{n=-\infty}^{\infty}\delta(\omega - n\omega_0)=\omega_0 \delta_{\Omega}(\omega)
+\end{equation*}
+
+\vspace*{0.5cm}
+
+将$\delta_{\Omega}(\omega)$的展开式代入$F_T(j \omega)=F_0(j \omega) \omega_0 \delta_{\Omega}(\omega)$得，
+
+\begin{equation*}
+F_T(j \omega)=F_0(j \omega) \omega_0 \sum_{n=-\infty}^{\infty} \delta\left(\omega-n \omega_0\right)=\omega_0 \sum_{n=-\infty}^{\infty} F_0\left(j n \omega_0\right) \delta\left(\omega-n \omega_0\right)
+\end{equation*}
+
+其中$F_0\left(j n \omega_0\right)$为周期信号的截断信号的傅里叶变换。
+
+
+\subsection{傅里叶变换的导出形式2}
+根据傅里叶系数和傅里叶变换的公式可得，
+
+\begin{equation*}
+F_n=\frac{1}{T} \int_{-T / 2}^{T / 2} f(t) e^{-j n \omega_0 t} d t,\quad F_0(j\omega) 
+=\int_{-\infty}^{\infty} f(t) e^{-j \omega t} d t
+\end{equation*}
+
+由于在上述导出傅里叶变换的时候，将周期信号截断后进行傅里叶变换，即运用了右式。因此在周期以外的$f(t)$均为0，其积分区域等价为$[ -\frac{T}{2},\frac{T}{2} ]$。因此可以得到，
+
+\begin{equation*}
+F_n=\frac{1}{T} F_0(j n \omega_0)=\left.\frac{1}{T} F_0(j \omega)\right|_{\omega=n \omega_0}
+\end{equation*}
+
+再根据上述导出的公式转换得，
+
+\begin{equation*}
+F_T(j \omega)= 2\pi \sum_{n=-\infty}^{\infty} F_n\delta(\omega-n\omega_0)=\omega_0 \sum_{n=-\infty}^{\infty} F_0\left(j n \omega_0\right) \delta\left(\omega-n \omega_0\right) 
+\end{equation*}
+
+其中$\omega_0 = \frac{2\pi}{T}$，$F_n$为傅里叶系数，
+
+\begin{equation*}
+F_n=\frac{1}{T} \int_{-T / 2}^{T / 2} f(t) e^{-j n \omega_0 t} d t
+\end{equation*}
+
+
+\textbf{综上所述，我们得到了两种周期信号傅里叶变换的导出形式。}
+
+\subsection{部分常见周期信号的傅里叶变换}
+\subsubsection{冲激序列$\delta_{T} = \sum_{n=-\infty}^\infty \delta(t-nt)$}
+
+先求傅里叶级数，
+
+\begin{equation*}
+F_n = \frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}} \delta_{T}(t) e^{-jn\omega_0t}dt =  \frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}} \delta(t) e^{-jn\omega_0t}dt = \frac{1}{T_0}\int_{-\frac{T_0}{2}}^{\frac{T_0}{2}}\delta(t)dt=\frac{1}{T_0}
+\end{equation*}
+
+再代入周期函数傅里叶变换的公式得，
+
+\begin{equation*}
+\delta_{T}(t) \leftrightarrow 2\pi \sum_{n=-\infty}^\infty \frac{1}{T_0}\delta(\omega-n\omega_0) = \omega_0\sum_{n=-\infty}^\infty \delta(\omega-n\omega_0)
+\end{equation*}
+
+
+\section{补充}
+\subsection{冲激函数的性质}
+
+\begin{equation*}
+    \delta(t) = \begin{cases}
+        & \infty ,\quad t=0\\
+        & 0,\quad  t\ne 0  
+    \end{cases}, \quad \text{且} \int_{-\infty}^{\infty} \delta(t) = 1
+\end{equation*}
+
+\subsubsection{筛选性质}
+设信号 $\mathrm{s}(\mathrm{t})$ 是一个在 $\mathrm{t}=\mathrm{t}_0$ 处连续的函数,则
+\begin{equation*}
+\mathrm{s}(\mathrm{t}) \delta\left(\mathrm{t}-\mathrm{t}_0\right)=\mathrm{s}\left(\mathrm{t}_0\right) \delta\left(\mathrm{t}-\mathrm{t}_0\right)
+\end{equation*}
+
+\subsubsection{采样性质}
+设信号 $\mathrm{s}(\mathrm{t})$ 是一个在 $\mathrm{t}=\mathrm{t}_0$ 处连续的函数, 则
+\begin{equation*}
+\int_{-\infty}^{+\infty} \mathrm{s}(\mathrm{t}) \delta\left(\mathrm{t}-\mathrm{t}_0\right) \mathrm{dt}=\mathrm{s}\left(\mathrm{t}_0\right)
+\end{equation*}
+
+\subsubsection{偶函数性质}
+\begin{equation*}
+    \delta(t) = \delta(-t)
+\end{equation*}
+
+\subsubsection{尺度变换性质}
+\begin{equation*}
+\delta(at-b)=\frac{1}{|a|} \delta\left(t-\frac{b}{a}\right)
+\end{equation*}
+
+\subsubsection{卷积性质}
+\begin{equation*}
+\mathrm{s}(t) * \delta(t-t_0) = \mathrm{s}(t-t_0)
+\end{equation*}
+
+\subsection{微分特性}
+\begin{equation*}
+x(t) \delta^{\prime}\left(t-t_0\right)=x\left(t_0\right) \delta^{\prime}\left(t-t_0\right)-x^{\prime}\left(t_0\right) \delta\left(t-t_0\right)
+\end{equation*}
+
+
+\subsection{卷积运算的性质}
+\subsubsection{交换律}
+\begin{equation*}
+     f_1(t) * f_2(t)=f_2(t) * f_1(t)
+\end{equation*}
+
+
+\subsubsection{分配律}
+\begin{equation*}
+f_1(t) *\left[f_2(t)+f_3(t)\right]=f_1(t) * f_2(t)+f_1(t) * f_3(t)
+\end{equation*}
+
+
+\subsubsection{结合律}
+\begin{equation*}
+\quad\left[f_1(t) * f_2(t)\right] * f_3(t)=f_1(t) *\left[f_2(t) * f_3(t)\right]
+\end{equation*}
+ 
+
+\subsubsection{微分性质}
+\begin{equation*}
+\frac{d}{d t}\left[f_1(t) * f_2(t)\right]=f_1(t) * \frac{d f_2(t)}{d t}=\frac{d f_1(t)}{d t} * f_2(t)
+\end{equation*}
+
+\subsubsection{积分性质}
+\begin{equation*}
+\int_{-\infty}^t\left[f_1(\lambda) * f_2(\lambda)\right] d \lambda=f_1(t) * \int_{-\infty}^t f_2(\lambda) d \lambda=\int_{-\infty}^t f_1(\lambda) d \lambda * f_2(t)
+\end{equation*}
+
+
+\end{document}
+
+
+
